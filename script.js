@@ -18,13 +18,13 @@ const CHECK=["GGGGGGGG","GGGGGwwG","GGGGwwGG","wGGGwwGG","wwGwwGGG","GwwwGGGG","
 // ---------- Content ----------
 const ITEMS=[
 {id:'charger',name:'Phone Charger',x:12,y:56,r:-10,metals:['Copper','Tin','Nickel','Trace Gold'],
- cost:["Copper mining strips land and leaves acidic runoff that can poison rivers and groundwater.","Tin from Indonesia's Bangka island is often dug in unsafe pits where miners have died, while dredging damages reefs and coastal waters.","Smelting metals burns huge amounts of energy, releasing greenhouse gases for a tiny cable."]},
+ cost:["Copper mining strips land and leaves acidic runoff that can poison rivers and groundwater.","Tin from Indonesia's Bangka island is often dug in unsafe pits where miners have died, while incurring damages to reefs and coastal waters.","Smelting metals burns huge amounts of energy, releasing greenhouse gases for a tiny cable!"]},
 {id:'phone',name:'Smartphone',x:60,y:14,r:8,metals:['Cobalt','Lithium','Gold','Tantalum','Copper'],
- cost:["More than half of the world's cobalt comes from the Democratic Republic of the Congo, where artisanal miners, including children, dig in dangerous conditions.","Lithium brine extraction uses vast amounts of water in some of Earth's driest regions.","Tantalum (from coltan) has been linked to conflict financing and forest loss in central Africa.","Gold mining can spread toxic mercury into soil and water."]},
+ cost:["More than half of the world's cobalt comes from the Democratic Republic of the Congo, where artisanal miners, including children, dig in dangerous conditions.","Lithium brine extraction uses vast amounts of water in some of Earth's driest regions.","Tantalum (from coltan) has been linked to conflict from financing and forest loss in central Africa.","Gold mining can spread toxic mercury into soil and water."]},
 {id:'laptop',name:'Laptop',x:22,y:12,r:-4,metals:['Cobalt','Lithium','Copper','Silver','Gold','Tin'],
- cost:["Most of a laptop's lifetime carbon footprint comes from making it, mostly mining and manufacturing.","Cobalt and lithium batteries carry the same labor and water problems as phones.","When dumped and burned in informal sites, cables and plastics release lead and other toxins into the air, soil and workers' bodies."]},
+ cost:["Most of a laptop's lifetime carbon footprint comes from making it, mostly mining.","Cobalt and lithium batteries carry the same labor and water problems as phones.","When dumped and burned in informal sites, cables and plastics release lead and other toxins into the air, soil and workers' bodies."]},
 {id:'chip',name:'Electronic Microchip',x:66,y:58,r:12,metals:['Gold','Copper','Tin','Tantalum','Palladium'],
- cost:["A tiny amount of gold can mean moving tons of rock, leaving scarred land, cleared forest and toxic tailings.","Chip making needs ultra-pure water and strong chemicals.","Gold and palladium mining use cyanide or mercury in places with weak environmental rules."]}
+ cost:["A tiny amount of gold can mean moving tons of rock, leaving scarred land, cleared forest and toxic remenants thats hurt the planet.","Chip making needs ultra-pure water and strong chemicals.","Gold and palladium mining use cyanide or mercury in places with weak environmental rules that are often manipulated."]}
 ];
 const STATIONS=[
 {name:'Community Tech Hub',x:6,y:10,w:28,h:20,col:'#2aa7a0',acc:'Phones, tablets, laptops, chargers and cables.',use:'Working devices are wiped and refurbished. Broken ones are shredded and sorted, and copper and gold are recovered for new electronics.'},
