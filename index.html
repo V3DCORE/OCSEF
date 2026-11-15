@@ -38,11 +38,142 @@
 <button class="btn" id="close">Close</button>
 </div></div>
 
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E-Waste Quest</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ===== SWAP YOUR OWN WOOD IMAGE HERE =====
+     Replace the value below with e.g.  url('wood.jpg')
+     and optionally set --wood-size (e.g. 256px) to tile it. */
+  --wood-bg:
+    repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 4px,transparent 4px 8px),
+    repeating-linear-gradient(90deg,rgba(0,0,0,.4) 0 4px,transparent 4px 180px),
+    repeating-linear-gradient(0deg,#9a6a3e 0 20px,#8d5e35 20px 40px,#a37440 40px 60px);
+  --wood-size:auto;
+  --ink:#1a1226;--cream:#f6e7bd;--navy:#1b1f4b;--green:#5fd35f;--yellow:#ffd23f;--red:#ff5d5d;--px:4px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:var(--cream);font-family:'VT323','Courier New',monospace;font-size:22px;line-height:1.15;image-rendering:pixelated}
+canvas{image-rendering:pixelated;display:block}
+h1,h2,h3,.pf,.btn{font-family:'Press Start 2P','Courier New',monospace;font-weight:400}
+.px{--bc:var(--cream);box-shadow:0 calc(-1*var(--px)) 0 0 var(--bc),0 var(--px) 0 0 var(--bc),calc(-1*var(--px)) 0 0 0 var(--bc),var(--px) 0 0 0 var(--bc)}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:18px 24px;background:#2a1d3d;border-bottom:var(--px) solid var(--cream)}
+header h1{font-size:16px;margin:0;color:var(--yellow)}
+.tracker{font-size:11px;display:flex;align-items:center;gap:10px}
+.pips{display:flex;gap:6px}
+.pip{width:14px;height:14px;background:#4a3a63;box-shadow:inset 0 0 0 2px var(--cream)}
+.pip.on{background:var(--green)}
+main{max-width:1000px;margin:0 auto;padding:28px 20px 40px}
+.screen{display:none}
+.screen.show{display:block;animation:fadein .5s steps(6) both}
+.screen.out{animation:fadeout .5s steps(6) both}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes fadeout{to{opacity:0}}
+.lead{max-width:62ch;margin:0 auto 22px;text-align:center}
+h2{font-size:14px;line-height:1.7;text-align:center;margin:0 0 14px;color:var(--yellow)}
+.btn{background:var(--yellow);color:var(--ink);border:0;padding:14px 18px;font-size:12px;cursor:pointer;--bc:var(--ink);box-shadow:inset calc(-1*var(--px)) calc(-1*var(--px)) 0 #c79a00,0 calc(-1*var(--px)) 0 0 var(--ink),0 var(--px) 0 0 var(--ink),calc(-1*var(--px)) 0 0 0 var(--ink),var(--px) 0 0 0 var(--ink);transition:transform .1s steps(2)}
+.btn:hover,.btn:focus-visible{transform:translateY(-4px);outline:none;background:#ffe27a}
+.btn:active{transform:translateY(2px)}
+/* Screen 1: desk */
+.desk{position:relative;height:520px;background:var(--wood-bg);background-size:var(--wood-size);margin:0 var(--px);--bc:#3a230f;overflow:hidden}
+.item{position:absolute;background:none;border:0;padding:10px;cursor:pointer;color:var(--cream);transform:rotate(var(--r,0deg));transition:filter .1s}
+.item canvas{width:112px;height:112px;filter:drop-shadow(8px 8px 0 rgba(0,0,0,.35))}
+.item .lab{display:block;margin-top:8px;font:9px 'Press Start 2P',monospace;background:var(--ink);padding:6px 8px}
+.item:hover canvas,.item:focus-visible canvas{animation:bounce .5s steps(2) infinite;filter:drop-shadow(0 0 10px var(--yellow)) drop-shadow(8px 8px 0 rgba(0,0,0,.35))}
+.item:focus-visible{outline:4px dashed var(--yellow)}
+@keyframes bounce{50%{transform:translateY(-10px)}}
+.badge{position:absolute;top:2px;right:2px;display:none}
+.badge canvas{width:36px;height:36px;animation:none!important;filter:none!important}
+.item.done .badge{display:block}
+.item.done canvas:first-child{opacity:.75}
+.go{display:none;text-align:center;margin-top:34px}
+.go.show{display:block}
+.go .btn{font-size:14px;padding:18px 24px;background:var(--green);animation:glow 1s steps(2) infinite}
+@keyframes glow{50%{box-shadow:inset -4px -4px 0 #2e9a2e,0 0 0 4px var(--ink),0 0 24px 8px #8dff8d}}
+/* Modal */
+.ov{position:fixed;inset:0;background:rgba(10,5,20,.75);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+.ov.show{display:flex}
+.dlg{background:var(--navy);width:min(640px,100%);max-height:92vh;overflow:auto;padding:22px;margin:8px}
+.dh{display:flex;gap:18px;align-items:center;margin-bottom:14px}
+.dh canvas{width:96px;height:96px;background:#2f3578;flex:none}
+.dh h3{font-size:15px;margin:0;line-height:1.5;color:var(--yellow)}
+.dlg h4{font:11px 'Press Start 2P',monospace;margin:16px 0 8px;color:#8fd3ff}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--cream);color:var(--ink);padding:4px 10px;font-size:20px}
+.dlg ul{list-style:none;margin:0;padding:0}
+.dlg li{padding-left:22px;position:relative;margin-bottom:8px}
+.dlg li::before{content:"";position:absolute;left:2px;top:7px;width:8px;height:8px;background:var(--red)}
+.dlg .btn{margin-top:14px}
+/* Screen 2 */
+.stat{display:inline-block;background:var(--navy);padding:8px 12px;margin:6px 0 0;--bc:var(--green)}
+.map{position:relative;margin:0 var(--px);--bc:#2c5a1f}
+.map canvas{width:100%;height:auto}
+.st{position:absolute;background:transparent;border:0;cursor:pointer;padding:0}
+.st:hover,.st:focus-visible{outline:none;box-shadow:0 0 0 4px var(--yellow),0 0 22px 6px rgba(255,210,63,.8)}
+.mk{position:absolute;left:50%;top:-30px;margin-left:-12px;width:24px;height:24px;background:var(--yellow);color:var(--ink);font:12px/24px 'Press Start 2P',monospace;text-align:center;animation:bounce .6s steps(2) infinite;box-shadow:inset -3px -3px 0 #c79a00}
+.tip{position:absolute;display:none;width:min(300px,78%);background:var(--navy);padding:12px 14px;z-index:5;font-size:20px;pointer-events:none;transform:translateX(-50%);--bc:var(--yellow)}
+.tip.show{display:block}
+.tip b{font:10px/1.6 'Press Start 2P',monospace;color:var(--yellow);display:block;margin-bottom:6px}
+.tip i{font-style:normal;color:#8fd3ff}
+.foot{text-align:center;margin-top:30px;font-size:18px}
+.foot small{display:block;margin-top:14px;opacity:.7;font-size:17px}
+@media(max-width:640px){.desk{height:640px}.item canvas{width:84px;height:84px}header h1{font-size:12px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <h1>E-WASTE QUEST</h1>
+  <div class="tracker pf"><span id="count">Items Inspected: 0/4</span><span class="pips" id="pips"></span></div>
+</header>
+<main>
+<section id="s1" class="screen show">
+  <h2>THE PROBLEM ON YOUR DESK</h2>
+  <p class="lead">Every gadget hides metals dug from the ground. Click each item to see what is inside, and who pays for it.</p>
+  <div class="desk px" id="desk"></div>
+  <div class="go" id="go"><button class="btn" id="goBtn">Discover the Solution <span style="font-family:monospace">&rarr;</span></button></div>
+</section>
+
+<section id="s2" class="screen">
+  <h2>THE SOLUTION: URBAN MINING</h2>
+  <p class="lead">Old electronics are full of gold, copper, cobalt and more. Recycling them lets us "urban mine" those metals and reuse them. That means less new mining, healthier ecosystems and less pressure for exploitative labor. Hover or tap a drop-off station.</p>
+  <div style="text-align:center"><span class="stat px">The world made about 62 million tonnes of e-waste in 2022. Only about 22% was documented as recycled.</span></div>
+  <p></p>
+  <div class="map px" id="map"><canvas id="mc" width="160" height="96"></canvas><div class="tip px" id="tip"></div></div>
+  <div class="foot"><button class="btn" id="restart">Restart</button>
+  <small>Stations are examples. Check your city's program for real drop-off sites. Stat: UN Global E-waste Monitor 2024.</small></div>
+</section>
+</main>
+
+<div class="ov" id="ov"><div class="dlg px" role="dialog" aria-modal="true" aria-labelledby="dn">
+  <div class="dh"><canvas id="dc"></canvas><h3 id="dn"></h3></div>
+  <h4>Key Metals Inside:</h4><div class="chips" id="dm"></div>
+  <h4>The Human &amp; Environmental Cost:</h4><ul id="dl"></ul>
+  <button class="btn" id="close">Close</button>
+</div></div>
+
 <script>
 // ---------- Pixel sprites (16x16 grids drawn to canvas) ----------
 const P={k:'#1a1226',w:'#f2f2f2',g:'#a8a8b8',s:'#c9cfe0',d:'#3a3f5c',b:'#4fb6e8',c:'#bff0ff',y:'#ffd23f',G:'#2fae4a'};
 function spr(cv,rows,pal){const p=Object.assign({},P,pal),h=rows.length,w=rows[0].length;cv.width=w;cv.height=h;const x=cv.getContext('2d');
-rows.forEach((r,j)=>[...r].forEach((ch,i)=>{if(p[ch]&&ch!=='.'){x.fillStyle=p[ch];x.fillRect(i,j,1,1)}}))}
+  rows.forEach((r,j)=>[...r].forEach((ch,i)=>{if(p[ch]&&ch!=='.'){x.fillStyle=p[ch];x.fillRect(i,j,1,1)}}))}
 const S={
 charger:["................","....kk....kk....","....ss....ss....","..kkkkkkkkkkkk..","..kwwwwwwwwwwk..","..kwwwwwwwwwwk..","..kwwgwwwwwwwk..","..kwwwwwwwwwwk..","..kwwwwwwwwwwk..","..kkkkkkkkkkkk..",".......kk.......",".......kk.......","......kk........",".......kk.......","........kk......",".........kkkk..."],
 phone:["................","....kkkkkkkk....","....kddddddk....","....kdbbbbdk....","....kdbccbdk....","....kdbbbbdk....","....kdbbbcdk....","....kdbbbbdk....","....kdbcbbdk....","....kdbbbbdk....","....kdbbbbdk....","....kddddddk....","....kddwwddk....","....kkkkkkkk....","................","................"],
@@ -74,30 +205,31 @@ let cur=null,last=null;
 const pips=document.getElementById('pips');
 ITEMS.forEach(()=>{const d=document.createElement('span');d.className='pip';pips.appendChild(d)});
 ITEMS.forEach(it=>{
-const b=document.createElement('button');b.className='item';b.id='i-'+it.id;
-b.style.cssText=`left:${it.x}%;top:${it.y}%;--r:${it.r}deg`;
-b.setAttribute('aria-label','Inspect '+it.name);
-const c=document.createElement('canvas');spr(c,S[it.id],it.id==='chip'?CHIPPAL:{});
-const k=document.createElement('span');k.className='badge';const kc=document.createElement('canvas');spr(kc,CHECK);k.appendChild(kc);
-const l=document.createElement('span');l.className='lab';l.textContent=it.name;
-b.append(c,k,l);b.onclick=()=>openItem(it,b);desk.appendChild(b);
+  const b=document.createElement('button');b.className='item';b.id='i-'+it.id;
+  b.style.cssText=`left:${it.x}%;top:${it.y}%;--r:${it.r}deg`;
+  b.setAttribute('aria-label','Inspect '+it.name);
+  const c=document.createElement('canvas');spr(c,S[it.id],it.id==='chip'?CHIPPAL:{});
+  const k=document.createElement('span');k.className='badge';const kc=document.createElement('canvas');spr(kc,CHECK);k.appendChild(kc);
+  const l=document.createElement('span');l.className='lab';l.textContent=it.name;
+  b.append(c,k,l);b.onclick=()=>openItem(it,b);desk.appendChild(b);
 });
 const ov=document.getElementById('ov');
 function openItem(it,btn){
-cur=it;last=btn;spr(document.getElementById('dc'),S[it.id],it.id==='chip'?CHIPPAL:{});
-document.getElementById('dn').textContent=it.name;
-document.getElementById('dm').innerHTML=it.metals.map(m=>`<span class="chip">${m}</span>`).join('');
-document.getElementById('dl').innerHTML=it.cost.map(t=>`<li>${t}</li>`).join('');
-ov.classList.add('show');document.getElementById('close').focus();
+  cur=it;last=btn;
+  spr(document.getElementById('dc'),S[it.id],it.id==='chip'?CHIPPAL:{});
+  document.getElementById('dn').textContent=it.name;
+  document.getElementById('dm').innerHTML=it.metals.map(m=>`<span class="chip">${m}</span>`).join('');
+  document.getElementById('dl').innerHTML=it.cost.map(t=>`<li>${t}</li>`).join('');
+  ov.classList.add('show');document.getElementById('close').focus();
 }
 function closeItem(){
-if(!cur)return;
-done.add(cur.id);last.classList.add('done');
-ov.classList.remove('show');cur=null;
-document.getElementById('count').textContent=`Items Inspected: ${done.size}/4`;
-[...pips.children].forEach((p,i)=>p.classList.toggle('on',i<done.size));
-if(done.size===4)document.getElementById('go').classList.add('show');
-last.focus();
+  if(!cur)return;
+  done.add(cur.id);last.classList.add('done');
+  ov.classList.remove('show');cur=null;
+  document.getElementById('count').textContent=`Items Inspected: ${done.size}/4`;
+  [...pips.children].forEach((p,i)=>p.classList.toggle('on',i<done.size));
+  if(done.size===4)document.getElementById('go').classList.add('show');
+  last.focus();
 }
 document.getElementById('close').onclick=closeItem;
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&cur)closeItem()});
@@ -108,11 +240,11 @@ const s1=document.getElementById('s1'),s2=document.getElementById('s2');
 function swap(a,b){a.classList.add('out');setTimeout(()=>{a.classList.remove('show','out');b.classList.add('show');scrollTo(0,0)},500)}
 document.getElementById('goBtn').onclick=()=>swap(s1,s2);
 document.getElementById('restart').onclick=()=>{
-done.clear();document.querySelectorAll('.item').forEach(i=>i.classList.remove('done'));
-document.getElementById('go').classList.remove('show');
-document.getElementById('count').textContent='Items Inspected: 0/4';
-[...pips.children].forEach(p=>p.classList.remove('on'));
-tip.classList.remove('show');swap(s2,s1);
+  done.clear();document.querySelectorAll('.item').forEach(i=>i.classList.remove('done'));
+  document.getElementById('go').classList.remove('show');
+  document.getElementById('count').textContent='Items Inspected: 0/4';
+  [...pips.children].forEach(p=>p.classList.remove('on'));
+  tip.classList.remove('show');swap(s2,s1);
 };
 
 // ---------- Screen 2: neighborhood map (160x96 pixel canvas) ----------
@@ -132,34 +264,34 @@ function house(a,b,c){R(a,b,14,11,'#2a1a12');R(a+1,b+1,12,9,c);R(a+1,b+5,12,1,'r
 function tree(a,b){R(a+3,b+6,2,3,'#6b4423');R(a+1,b,5,7,'#2e8b3a');R(a,b+1,7,5,'#2e8b3a');R(a+2,b+1,2,2,'#58c25a')}
 [[36,30],[4,34],[62,6],[62,28],[90,30],[150,32],[3,86],[24,82],[62,84],[90,84],[150,84],[88,58],[140,4],[112,34],[58,72]].forEach(t=>tree(...t));
 function station(s){
-R(s.x-1,s.y-1,s.w+2,s.h+2,'#1a1226');R(s.x,s.y,s.w,s.h,s.col);R(s.x,s.y,s.w,4,'rgba(255,255,255,.3)');
-R(s.x+2,s.y+6,s.w-4,s.h-9,'rgba(0,0,0,.18)');
-// recycle sign
-const cx=s.x+Math.floor(s.w/2)-3,cy=s.y+7;R(cx,cy,7,7,'#fff');R(cx+1,cy+1,5,5,'#2fae4a');R(cx+2,cy+2,3,3,'#fff');R(cx+3,cy+3,1,1,'#2fae4a');
-R(s.x+s.w/2-2,s.y+s.h-3,4,3,'#1a1226');
+  R(s.x-1,s.y-1,s.w+2,s.h+2,'#1a1226');R(s.x,s.y,s.w,s.h,s.col);R(s.x,s.y,s.w,4,'rgba(255,255,255,.3)');
+  R(s.x+2,s.y+6,s.w-4,s.h-9,'rgba(0,0,0,.18)');
+  // recycle sign
+  const cx=s.x+Math.floor(s.w/2)-3,cy=s.y+7;R(cx,cy,7,7,'#fff');R(cx+1,cy+1,5,5,'#2fae4a');R(cx+2,cy+2,3,3,'#fff');R(cx+3,cy+3,1,1,'#2fae4a');
+  R(s.x+s.w/2-2,s.y+s.h-3,4,3,'#1a1226');
 }
 STATIONS.forEach(station);
 // stations as clickable overlays
 const map=document.getElementById('map'),tip=document.getElementById('tip');
 STATIONS.forEach(s=>{
-const b=document.createElement('button');b.className='st';
-b.style.cssText=`left:${s.x/1.6}%;top:${s.y/.96}%;width:${s.w/1.6}%;height:${s.h/.96}%`;
-b.setAttribute('aria-label',s.name+': show accepted items');
-b.innerHTML='<span class="mk">!</span>';
-const show=()=>{
-tip.innerHTML=`<b>${s.name}</b><i>Accepts:</i> ${s.acc}<br><i>Reused as:</i> ${s.use}`;
-const cx=Math.min(78,Math.max(22,(s.x+s.w/2)/1.6));tip.style.left=cx+'%';
-if(s.up){tip.style.top='auto';tip.style.bottom=((96-s.y)/.96+4)+'%'}
-else{tip.style.bottom='auto';tip.style.top=((s.y+s.h)/.96+3)+'%'}
-tip.classList.add('show');
-};
-b.addEventListener('mouseenter',show);b.addEventListener('focus',show);
-b.addEventListener('click',e=>{e.stopPropagation();show()});
-b.addEventListener('mouseleave',()=>tip.classList.remove('show'));
-b.addEventListener('blur',()=>tip.classList.remove('show'));
-map.appendChild(b);
+  const b=document.createElement('button');b.className='st';
+  b.style.cssText=`left:${s.x/1.6}%;top:${s.y/.96}%;width:${s.w/1.6}%;height:${s.h/.96}%`;
+  b.setAttribute('aria-label',s.name+': show accepted items');
+  b.innerHTML='<span class="mk">!</span>';
+  const show=()=>{
+    tip.innerHTML=`<b>${s.name}</b><i>Accepts:</i> ${s.acc}<br><i>Reused as:</i> ${s.use}`;
+    const cx=Math.min(78,Math.max(22,(s.x+s.w/2)/1.6));tip.style.left=cx+'%';
+    if(s.up){tip.style.top='auto';tip.style.bottom=((96-s.y)/.96+4)+'%'}
+    else{tip.style.bottom='auto';tip.style.top=((s.y+s.h)/.96+3)+'%'}
+    tip.classList.add('show');
+  };
+  b.addEventListener('mouseenter',show);b.addEventListener('focus',show);
+  b.addEventListener('click',e=>{e.stopPropagation();show()});
+  b.addEventListener('mouseleave',()=>tip.classList.remove('show'));
+  b.addEventListener('blur',()=>tip.classList.remove('show'));
+  map.appendChild(b);
 });
 map.addEventListener('click',()=>tip.classList.remove('show'));
 </script>
 </body>
-</html>
+</html> */-->
