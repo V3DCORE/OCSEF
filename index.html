@@ -1,11 +1,78 @@
+<!-- Main page structure: content and interface elements. -->
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>E-Waste Quest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>E-WASTE QUEST</h1>
+        <div class="tracker pf">
+            <span id="count">Items Inspected: 0/4</span>
+            <span class="pips" id="pips"></span>
+        </div>
+    </header>
+
+    <main>
+        <section id="s1" class="screen show">
+            <h2>THE PROBLEM ON YOUR DESK</h2>
+            <p class="lead">Every gadget hides metals dug from the ground. Click each item to see what is inside, and who pays for it.</p>
+            <div class="desk px" id="desk"></div>
+            <div class="go" id="go">
+                <button class="btn" id="goBtn">Discover the Solution <span style="font-family:monospace">&rarr;</span></button>
+            </div>
+        </section>
+
+        <section id="s2" class="screen">
+            <h2>THE SOLUTION: URBAN MINING</h2>
+            <p class="lead">Old electronics are full of gold, copper, cobalt and more. Recycling them lets us "urban mine" those metals and reuse them. That means less new mining, healthier ecosystems and less pressure for exploitative labor. Hover or tap a drop-off station.</p>
+            <div style="text-align:center">
+                <span class="stat px">The world made about 62 million tonnes of e-waste in 2022. Only about 22% was documented as recycled.</span>
+            </div>
+            <p></p>
+            <div class="map px" id="map">
+                <canvas id="mc" width="160" height="96"></canvas>
+                <div class="tip px" id="tip"></div>
+            </div>
+            <div class="foot">
+                <button class="btn" id="restart">Restart</button>
+                <small>Stations are examples. Check your city's program for real drop-off sites. Stat: UN Global E-waste Monitor 2024.</small>
+            </div>
+        </section>
+    </main>
+
+    <div class="ov" id="ov">
+        <div class="dlg px" role="dialog" aria-modal="true" aria-labelledby="dn">
+            <div class="dh">
+                <canvas id="dc"></canvas>
+                <h3 id="dn"></h3>
+            </div>
+            <h4>Key Metals Inside:</h4>
+            <div class="chips" id="dm"></div>
+            <h4>The Human &amp; Environmental Cost:</h4>
+            <ul id="dl"></ul>
+            <button class="btn" id="close">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>E-Waste Quest</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-<link href="https://thumb.ac-illust.com/92/92c00f28aa29ce4d92fd65e59a48b24d_t.jpeg"></link>
+<link href="styles.css" rel="stylesheet">
+<link href="script.js" rel="javascript">
 
 </head>
 <body>
@@ -20,7 +87,7 @@
 <div class="desk px" id="desk"></div>
 <div class="go" id="go"><button class="btn" id="goBtn">Discover the Solution <span style="font-family:monospace">&rarr;</span></button></div>
 </section>
-
+<img class="desk" src="https://thumb.ac-illust.com/92/92c00f28aa29ce4d92fd65e59a48b24d_t.jpeg"></img>
 <section id="s2" class="screen">
 <h2>THE SOLUTION: URBAN MINING</h2>
 <p class="lead">Old electronics are full of gold, copper, cobalt and more. Recycling them lets us "urban mine" those metals and reuse them. That means less new mining, healthier ecosystems and less pressure for exploitative labor. Hover or tap a drop-off station.</p>
@@ -37,8 +104,7 @@
 <h4>The Human &amp; Environmental Cost:</h4><ul id="dl"></ul>
 <button class="btn" id="close">Close</button>
 </div></div>
-
-
+<script src="script.js"></script>
 </body>
 </html>
 
@@ -50,7 +116,7 @@
 
 
 
-<!--<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">

@@ -1,5 +1,474 @@
 
-.desk{
+/* Styles are grouped by page area. Change the variables below to update the theme. */
+:root {
+  /* ===== SWAP YOUR OWN WOOD IMAGE HERE =====
+     Replace the value below with e.g.  url('wood.jpg')
+     and optionally set --wood-size (e.g. 256px) to tile it. */
+  --wood-bg:
+    repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 4px,transparent 4px 8px),
+    repeating-linear-gradient(90deg,rgba(0,0,0,.4) 0 4px,transparent 4px 180px),
+    repeating-linear-gradient(0deg,#9a6a3e 0 20px,#8d5e35 20px 40px,#a37440 40px 60px);
+  --wood-size:auto;
+  --ink:#1a1226;
+  --cream:#f6e7bd;
+  --navy:#1b1f4b;
+  --green:#5fd35f;
+  --yellow:#ffd23f;
+  --red:#ff5d5d;
+  --px:4px;
+}
+
+* {
+  box-sizing:border-box
+}
+
+body {
+  margin:0;
+  background:var(--ink);
+  color:var(--cream);
+  font-family:'VT323','Courier New',monospace;
+  font-size:22px;
+  line-height:1.15;
+  image-rendering:pixelated
+}
+
+canvas {
+  image-rendering:pixelated;
+  display:block
+}
+
+h1,h2,h3,.pf,.btn {
+  font-family:'Press Start 2P','Courier New',monospace;
+  font-weight:400
+}
+
+.px {
+  --bc:var(--cream);
+  box-shadow:0 calc(-1*var(--px)) 0 0 var(--bc),0 var(--px) 0 0 var(--bc),calc(-1*var(--px)) 0 0 0 var(--bc),var(--px) 0 0 0 var(--bc)
+}
+
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:18px 24px;
+  background:#2a1d3d;
+  border-bottom:var(--px) solid var(--cream)
+}
+
+header h1 {
+  font-size:16px;
+  margin:0;
+  color:var(--yellow)
+}
+
+.tracker {
+  font-size:11px;
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+
+.pips {
+  display:flex;
+  gap:6px
+}
+
+.pip {
+  width:14px;
+  height:14px;
+  background:#4a3a63;
+  box-shadow:inset 0 0 0 2px var(--cream)
+}
+
+.pip.on {
+  background:var(--green)
+}
+
+main {
+  max-width:1000px;
+  margin:0 auto;
+  padding:28px 20px 40px
+}
+
+.screen {
+  display:none
+}
+
+.screen.show {
+  display:block;
+  animation:fadein .5s steps(6) both
+}
+
+.screen.out {
+  animation:fadeout .5s steps(6) both
+}
+
+@keyframes fadein {
+  from {
+  opacity:0
+}
+to {
+  opacity:1
+}
+
+}
+
+@keyframes fadeout {
+  to {
+  opacity:0
+}
+
+}
+
+.lead {
+  max-width:62ch;
+  margin:0 auto 22px;
+  text-align:center
+}
+
+h2 {
+  font-size:14px;
+  line-height:1.7;
+  text-align:center;
+  margin:0 0 14px;
+  color:var(--yellow)
+}
+
+.btn {
+  background:var(--yellow);
+  color:var(--ink);
+  border:0;
+  padding:14px 18px;
+  font-size:12px;
+  cursor:pointer;
+  --bc:var(--ink);
+  box-shadow:inset calc(-1*var(--px)) calc(-1*var(--px)) 0 #c79a00,0 calc(-1*var(--px)) 0 0 var(--ink),0 var(--px) 0 0 var(--ink),calc(-1*var(--px)) 0 0 0 var(--ink),var(--px) 0 0 0 var(--ink);
+  transition:transform .1s steps(2)
+}
+
+.btn:hover,.btn:focus-visible {
+  transform:translateY(-4px);
+  outline:none;
+  background:#ffe27a
+}
+
+.btn:active {
+  transform:translateY(2px)
+}
+
+/* Screen 1: desk */
+.desk {
+  position:relative;
+  height:520px;
+  background:var(--wood-bg);
+  background-size:var(--wood-size);
+  margin:0 var(--px);
+  --bc:#3a230f;
+  overflow:hidden
+}
+
+.item {
+  position:absolute;
+  background:none;
+  border:0;
+  padding:10px;
+  cursor:pointer;
+  color:var(--cream);
+  transform:rotate(var(--r,0deg));
+  transition:filter .1s
+}
+
+.item canvas {
+  width:112px;
+  height:112px;
+  filter:drop-shadow(8px 8px 0 rgba(0,0,0,.35))
+}
+
+.item .lab {
+  display:block;
+  margin-top:8px;
+  font:9px 'Press Start 2P',monospace;
+  background:var(--ink);
+  padding:6px 8px
+}
+
+.item:hover canvas,.item:focus-visible canvas {
+  animation:bounce .5s steps(2) infinite;
+  filter:drop-shadow(0 0 10px var(--yellow)) drop-shadow(8px 8px 0 rgba(0,0,0,.35))
+}
+
+.item:focus-visible {
+  outline:4px dashed var(--yellow)
+}
+
+@keyframes bounce {
+  50% {
+  transform:translateY(-10px)
+}
+
+}
+
+.badge {
+  position:absolute;
+  top:2px;
+  right:2px;
+  display:none
+}
+
+.badge canvas {
+  width:36px;
+  height:36px;
+  animation:none!important;
+  filter:none!important
+}
+
+.item.done .badge {
+  display:block
+}
+
+.item.done canvas:first-child {
+  opacity:.75
+}
+
+.go {
+  display:none;
+  text-align:center;
+  margin-top:34px
+}
+
+.go.show {
+  display:block
+}
+
+.go .btn {
+  font-size:14px;
+  padding:18px 24px;
+  background:var(--green);
+  animation:glow 1s steps(2) infinite
+}
+
+@keyframes glow {
+  50% {
+  box-shadow:inset -4px -4px 0 #2e9a2e,0 0 0 4px var(--ink),0 0 24px 8px #8dff8d
+}
+
+}
+
+/* Modal */
+.ov {
+  position:fixed;
+  inset:0;
+  background:rgba(10,5,20,.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  z-index:10
+}
+
+.ov.show {
+  display:flex
+}
+
+.dlg {
+  background:var(--navy);
+  width:min(640px,100%);
+  max-height:92vh;
+  overflow:auto;
+  padding:22px;
+  margin:8px
+}
+
+.dh {
+  display:flex;
+  gap:18px;
+  align-items:center;
+  margin-bottom:14px
+}
+
+.dh canvas {
+  width:96px;
+  height:96px;
+  background:#2f3578;
+  flex:none
+}
+
+.dh h3 {
+  font-size:15px;
+  margin:0;
+  line-height:1.5;
+  color:var(--yellow)
+}
+
+.dlg h4 {
+  font:11px 'Press Start 2P',monospace;
+  margin:16px 0 8px;
+  color:#8fd3ff
+}
+
+.chips {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px
+}
+
+.chip {
+  background:var(--cream);
+  color:var(--ink);
+  padding:4px 10px;
+  font-size:20px
+}
+
+.dlg ul {
+  list-style:none;
+  margin:0;
+  padding:0
+}
+
+.dlg li {
+  padding-left:22px;
+  position:relative;
+  margin-bottom:8px
+}
+
+.dlg li::before {
+  content:"";
+  position:absolute;
+  left:2px;
+  top:7px;
+  width:8px;
+  height:8px;
+  background:var(--red)
+}
+
+.dlg .btn {
+  margin-top:14px
+}
+
+/* Screen 2 */
+.stat {
+  display:inline-block;
+  background:var(--navy);
+  padding:8px 12px;
+  margin:6px 0 0;
+  --bc:var(--green)
+}
+
+.map {
+  position:relative;
+  margin:0 var(--px);
+  --bc:#2c5a1f
+}
+
+.map canvas {
+  width:100%;
+  height:auto
+}
+
+.st {
+  position:absolute;
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  padding:0
+}
+
+.st:hover,.st:focus-visible {
+  outline:none;
+  box-shadow:0 0 0 4px var(--yellow),0 0 22px 6px rgba(255,210,63,.8)
+}
+
+.mk {
+  position:absolute;
+  left:50%;
+  top:-30px;
+  margin-left:-12px;
+  width:24px;
+  height:24px;
+  background:var(--yellow);
+  color:var(--ink);
+  font:12px/24px 'Press Start 2P',monospace;
+  text-align:center;
+  animation:bounce .6s steps(2) infinite;
+  box-shadow:inset -3px -3px 0 #c79a00
+}
+
+.tip {
+  position:absolute;
+  display:none;
+  width:min(300px,78%);
+  background:var(--navy);
+  padding:12px 14px;
+  z-index:5;
+  font-size:20px;
+  pointer-events:none;
+  transform:translateX(-50%);
+  --bc:var(--yellow)
+}
+
+.tip.show {
+  display:block
+}
+
+.tip b {
+  font:10px/1.6 'Press Start 2P',monospace;
+  color:var(--yellow);
+  display:block;
+  margin-bottom:6px
+}
+
+.tip i {
+  font-style:normal;
+  color:#8fd3ff
+}
+
+.foot {
+  text-align:center;
+  margin-top:30px;
+  font-size:18px
+}
+
+.foot small {
+  display:block;
+  margin-top:14px;
+  opacity:.7;
+  font-size:17px
+}
+
+@media(max-width:640px) {
+  .desk {
+  height:640px
+}
+.item canvas {
+  width:84px;
+  height:84px
+}
+header h1 {
+  font-size:12px
+}
+
+}
+
+@media(prefers-reduced-motion:reduce) {
+  * {
+  animation:none!important;
+  transition:none!important
+}
+
+}
+
+
+
+
+
+
+
+
+
+/*.desk{
 position:relative;
 height:520px;
 background:var(--wood-bg);
@@ -87,7 +556,7 @@ animation:glow 1s steps(2) infinite;
 50%{box-shadow:inset -4px -4px 0 #2e9a2e,0 0 0 4px var(--ink),0 0 24px 8px #8dff8d};
 }
 
-/* Modal */
+Modal
 .ov{
 position:fixed;
 inset:0;background:rgba(10,5,20,.75);
@@ -171,7 +640,7 @@ background:var(--red);
 margin-top:14px;
 }
 
-/* Screen 2 */
+Screen 2 
 .stat{
 display:inline-block;
 background:var(--navy);
@@ -257,3 +726,4 @@ font-size:17px;
 }
 @media(max-width:640px){.desk{height:640px}.item canvas{width:84px;height:84px}header h1{font-size:12px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+*/
