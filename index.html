@@ -1,59 +1,86 @@
-<!-- Main page structure: content and interface elements. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>E-Waste Quest</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  <!-- Set up the page title, fonts, and stylesheet. -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>E-Waste Quest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header>
+  <!-- Show the game title and inspection progress. -->
+  <header>
     <h1>E-WASTE QUEST</h1>
-    <div class="tracker pf"><span id="count">Items Inspected: 0/4</span><span class="pips" id="pips"></span></div>
-</header>
-<main>
-<section id="s1" class="screen show">
-    <h2>THE PROBLEM ON YOUR DESK</h2>
-    <p class="lead">Every gadget hides metals dug from the ground. Click each item to see what is inside, and who pays for it.</p>
-    <div class="desk px" id="desk"></div>
-    <div class="go" id="go"><button class="btn" id="goBtn">Discover the Solution <span style="font-family:monospace">&rarr;</span></button></div>
-</section>
+    <div class="tracker pf">
+      <span id="count">Items Inspected: 0/4</span>
+      <span class="pips" id="pips"></span>
+    </div>
+  </header>
 
-<section id="s2" class="screen">
-    <h2>THE SOLUTION: RECYCLING</h2>
-    <p class="lead">Old electronics are full of gold, copper, cobalt and more. Recycling them lets us "urban mine" those metals and reuse them. That means less new mining, healthier ecosystems and less pressure for exploitative labor. Hover or tap a drop-off station.</p>
-    <div style="text-align:center"><span class="stat px">The world made about 62 million tonnes of e-waste in 2022. Only about 22% was documented as recycled.</span></div>
-    <p></p>
-    <div class="map px" id="map">
-        <!-- Replace this src with your map image. Keep the image close to a 160:96 ratio so the station buttons line up. -->
+  <main>
+    <!-- First screen: inspect the four gadgets. -->
+    <section id="s1" class="screen show">
+      <h2>THE PROBLEM ON YOUR DESK</h2>
+      <p class="lead">Every gadget hides metals dug from the ground. Click each item to see what is inside, and who pays for it.</p>
+      <div class="desk px" id="desk"></div>
+      <div class="go" id="go">
+        <button class="btn" id="goBtn">Discover the Solution <span style="font-family:monospace">&rarr;</span></button>
+      </div>
+    </section>
+
+    <!-- Second screen: learn about recycling stations. -->
+    <section id="s2" class="screen">
+      <h2>THE SOLUTION: RECYCLING</h2>
+      <p class="lead">Old electronics are full of gold, copper, cobalt and more. Recycling them lets us "urban mine" those metals and reuse them. That means less new mining, healthier ecosystems and less pressure for exploitative labor. Hover or tap a drop-off station.</p>
+
+      <div style="text-align:center">
+        <span class="stat px">The world made about 62 million tonnes of e-waste in 2022. Only about 22% was documented as recycled.</span>
+      </div>
+
+      <div class="map px" id="map">
+        <!-- The drawn map appears if this image cannot load. -->
         <img id="map-image" class="map-image" hidden src="images/neighborhood-map.png" alt="Neighborhood map with recycling stations">
         <canvas id="mc" width="160" height="96"></canvas>
         <div class="tip px" id="tip"></div>
+      </div>
+
+      <!-- Restart the game and show the source note. -->
+      <div class="foot">
+        <button class="btn" id="restart">Restart</button>
+        <small>Stations are examples. Check your city's program for real drop-off sites. Stat: UN Global E-waste Monitor 2024.</small>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pop-up with details about the selected gadget. -->
+  <div class="ov" id="ov">
+    <div class="dlg px" role="dialog" aria-modal="true" aria-labelledby="dn">
+      <div class="dh">
+        <canvas id="dc"></canvas>
+        <img id="di" class="dialog-image" alt="" hidden>
+        <h3 id="dn"></h3>
+      </div>
+
+      <h4>Key Metals Inside:</h4>
+      <div class="chips" id="dm"></div>
+
+      <h4>The Human &amp; Environmental Cost:</h4>
+      <ul id="dl"></ul>
+
+      <button class="btn" id="close">Close</button>
     </div>
-    <div class="foot"><button class="btn" id="restart">Restart</button>
-    <small>Stations are examples. Check your city's program for real drop-off sites. Stat: UN Global E-waste Monitor 2024.</small></div>
-</section>
-</main>
+  </div>
 
-<div class="ov" id="ov"><div class="dlg px" role="dialog" aria-modal="true" aria-labelledby="dn">
-    <div class="dh"><canvas id="dc"></canvas><img id="di" class="dialog-image" alt="" hidden><h3 id="dn"></h3></div>
-    <h4>Key Metals Inside:</h4><div class="chips" id="dm"></div>
-    <h4>The Human &amp; Environmental Cost:</h4><ul id="dl"></ul>
-    <button class="btn" id="close">Close</button>
-</div></div>
-
-<!-- IMAGE FILES: replace the src paths below with your own image paths.
-     Recommended: transparent PNGs, square images (e.g. 400 x 400 px).
-     If an image cannot be found, the pixel drawing is shown instead. -->
-<div hidden id="item-image-library">
+  <!-- Optional photos for the four gadgets. -->
+  <div hidden id="item-image-library">
     <img data-item-image="charger" src="https://cdn.phototourl.com/anon/2026-11-15-e50a0370-1e11-4535-9eb1-25284aa6a3d8.png" alt="Phone charger">
     <img data-item-image="phone" src="https://cdn.phototourl.com/anon/2026-11-15-3f2db12e-2bdc-47a7-bf9c-f6ef5f3af1d5.png" alt="Smartphone">
     <img data-item-image="laptop" src="https://cdn.phototourl.com/anon/2026-11-15-3cca0297-2534-45ae-8944-e14972d52ede.png" alt="Laptop">
     <img data-item-image="chip" src="https://cdn.phototourl.com/anon/2026-11-15-fe77c439-2e47-4079-b813-955478a806b8.png" alt="Electronic microchip">
-</div>
+  </div>
 
-<script src="script.js"></script>
+  <!-- Load the game interactions. -->
+  <script src="script.js"></script>
 </body>
 </html>

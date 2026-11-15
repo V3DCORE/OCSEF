@@ -3,8 +3,9 @@
 // Item images are configured in the HTML image library near the bottom of index.html.
 // If an image fails to load, the original pixel drawing remains visible.
 
-// ---------- Pixel sprites (16x16 grids drawn to canvas) ----------
+// Draw the small pixel pictures used for the gadgets and check marks.
 const P={k:'#1a1226',w:'#f2f2f2',g:'#a8a8b8',s:'#c9cfe0',d:'#3a3f5c',b:'#4fb6e8',c:'#bff0ff',y:'#ffd23f',G:'#2fae4a'};
+// Turn rows of color letters into a picture on a canvas.
 function spr(cv,rows,pal){const p=Object.assign({},P,pal),h=rows.length,w=rows[0].length;cv.width=w;cv.height=h;const x=cv.getContext('2d');
   rows.forEach((r,j)=>[...r].forEach((ch,i)=>{if(p[ch]&&ch!=='.'){x.fillStyle=p[ch];x.fillRect(i,j,1,1)}}))}
 const S={
@@ -15,7 +16,7 @@ chip:["................","....y.y.y.y.....","...kkkkkkkkkk...","..ykddddddddky..
 const CHIPPAL={d:'#2b2f3a',c:'#7b8394'};
 const CHECK=["GGGGGGGG","GGGGGwwG","GGGGwwGG","wGGGwwGG","wwGwwGGG","GwwwGGGG","GGwwGGGG","GGGGGGGG"];
 
-// ---------- Content ----------
+// Gadget facts and recycling station details.
 const ITEMS=[
 {id:'charger',name:'Phone Charger',x:12,y:56,r:-10,metals:['Copper','Tin','Nickel','Trace Gold'],
  cost:["Copper mining strips land and leaves acidic runoff that can poison rivers and groundwater.","Tin from Indonesia's Bangka island is often dug in unsafe pits where miners have died, while incurring damages to reefs and coastal waters.","Smelting metals burns huge amounts of energy, releasing greenhouse gases for a tiny cable!"]},
@@ -32,11 +33,13 @@ const STATIONS=[
 {name:'City Eco-Center',x:98,y:60,w:30,h:22,col:'#3b6fd8',up:1,acc:'Laptops, monitors, TVs, printers and other bulky electronics.',use:'Machines shred and separate copper, aluminum, silver, gold and tantalum for manufacturers to use again.'}
 ];
 
-// ---------- Screen 1 ----------
+// Screen 1: show gadgets and track what the player inspects.
 const desk=document.getElementById('desk'),done=new Set();
 let cur=null,last=null;
 const pips=document.getElementById('pips');
+// Add one progress dot for each gadget.
 ITEMS.forEach(()=>{const d=document.createElement('span');d.className='pip';pips.appendChild(d)});
+// Put each gadget on the desk with a picture, name, and click action.
 ITEMS.forEach(it=>{
   const b=document.createElement('button');b.className='item';b.id='i-'+it.id;
   b.style.setProperty('--r',`${it.r}deg`);
@@ -52,6 +55,7 @@ ITEMS.forEach(it=>{
   b.append(c,image,k,l);b.onclick=()=>openItem(it,b);desk.appendChild(b);
 });
 const ov=document.getElementById('ov');
+// Fill in and open the pop-up for the selected gadget.
 function openItem(it,btn){
   cur=it;last=btn;
   const previewCanvas=document.getElementById('dc');
@@ -69,6 +73,7 @@ function openItem(it,btn){
   document.getElementById('dl').innerHTML=it.cost.map(t=>`<li>${t}</li>`).join('');
   ov.classList.add('show');document.getElementById('close').focus();
 }
+// Close the pop-up, mark the gadget done, and update the counter.
 function closeItem(){
   if(!cur)return;
   done.add(cur.id);last.classList.add('done');
@@ -82,8 +87,9 @@ document.getElementById('close').onclick=closeItem;
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&cur)closeItem()});
 ov.addEventListener('click',e=>{if(e.target===ov)closeItem()});
 
-// ---------- Screen transitions ----------
+// Switch between the desk screen and the map screen.
 const s1=document.getElementById('s1'),s2=document.getElementById('s2');
+// Fade out one screen, then show the other.
 function swap(a,b){a.classList.add('out');setTimeout(()=>{a.classList.remove('show','out');b.classList.add('show');scrollTo(0,0)},500)}
 document.getElementById('goBtn').onclick=()=>swap(s1,s2);
 document.getElementById('restart').onclick=()=>{
@@ -94,25 +100,31 @@ document.getElementById('restart').onclick=()=>{
   tip.classList.remove('show');swap(s2,s1);
 };
 
-// ---------- Screen 2: neighborhood map (160x96 drawing with optional image) ----------
+// Screen 2: draw the map and add clickable recycling stations.
 const mapImage=document.getElementById('map-image');
 const mc=document.getElementById('mc'),x=mc.getContext('2d');
 mapImage.onload=()=>{mapImage.hidden=false;mc.hidden=true};
 mapImage.onerror=()=>{mapImage.hidden=true;mc.hidden=false};
+// Draw a colored rectangle. Map art is built from these blocks.
 const R=(a,b,w,h,c)=>{x.fillStyle=c;x.fillRect(a,b,w,h)};
 let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+// Make the green background and add scattered grass pixels.
 R(0,0,160,96,'#6cc04a');
 for(let i=0;i<260;i++)R(Math.floor(rnd()*160),Math.floor(rnd()*96),1,1,rnd()>.5?'#5ab23c':'#7fd05a');
-// roads + sidewalks
+// Draw roads, sidewalks, and lane markings.
 R(0,38,160,2,'#d8d0bd');R(0,54,160,2,'#d8d0bd');R(70,0,2,96,'#d8d0bd');R(84,0,2,96,'#d8d0bd');
 R(0,40,160,14,'#4a4a58');R(72,0,12,96,'#4a4a58');R(72,40,12,14,'#4a4a58');
 for(let i=0;i<160;i+=8)if(i<70||i>84)R(i,46,4,1,'#ffd23f');
 for(let j=0;j<96;j+=8)if(j<38||j>54)R(77,j,1,4,'#ffd23f');
 for(let j=40;j<54;j+=2){R(62,j,6,1,'#eee');R(88,j,6,1,'#eee')}
+// Draw one house on the map.
 function house(a,b,c){R(a,b,14,11,'#2a1a12');R(a+1,b+1,12,9,c);R(a+1,b+5,12,1,'rgba(0,0,0,.25)');R(a+10,b+2,2,2,'#7a6a5a');R(a+6,b+11,3,3,'#8a5a34');R(a+5,b+14,5,1,'#d8d0bd')}
+// Add houses and trees around the roads.
 [[44,8,'#d9534f'],[92,8,'#e8a33d'],[6,62,'#8a5ad8'],[30,66,'#d9534f'],[134,64,'#e8a33d'],[46,62,'#3b8fd8']].forEach(h=>house(...h));
+// Draw one tree on the map.
 function tree(a,b){R(a+3,b+6,2,3,'#6b4423');R(a+1,b,5,7,'#2e8b3a');R(a,b+1,7,5,'#2e8b3a');R(a+2,b+1,2,2,'#58c25a')}
 [[36,30],[4,34],[62,6],[62,28],[90,30],[150,32],[3,86],[24,82],[62,84],[90,84],[150,84],[88,58],[140,4],[112,34],[58,72]].forEach(t=>tree(...t));
+// Draw one recycling station on the map.
 function station(s){
   R(s.x-1,s.y-1,s.w+2,s.h+2,'#1a1226');R(s.x,s.y,s.w,s.h,s.col);R(s.x,s.y,s.w,4,'rgba(255,255,255,.3)');
   R(s.x+2,s.y+6,s.w-4,s.h-9,'rgba(0,0,0,.18)');
@@ -120,14 +132,16 @@ function station(s){
   const cx=s.x+Math.floor(s.w/2)-3,cy=s.y+7;R(cx,cy,7,7,'#fff');R(cx+1,cy+1,5,5,'#2fae4a');R(cx+2,cy+2,3,3,'#fff');R(cx+3,cy+3,1,1,'#2fae4a');
   R(s.x+s.w/2-2,s.y+s.h-3,4,3,'#1a1226');
 }
+// Draw all the recycling stations.
 STATIONS.forEach(station);
-// stations as clickable overlays
+// Add clickable areas over the stations.
 const map=document.getElementById('map'),tip=document.getElementById('tip');
 STATIONS.forEach(s=>{
   const b=document.createElement('button');b.className='st';
   b.style.cssText=`left:${s.x/1.6}%;top:${s.y/.96}%;width:${s.w/1.6}%;height:${s.h/.96}%`;
   b.setAttribute('aria-label',s.name+': show accepted items');
   b.innerHTML='<span class="mk">!</span>';
+  // Show the station name and recycling details.
   const show=()=>{
     tip.innerHTML=`<b>${s.name}</b><i>Accepts:</i> ${s.acc}<br><i>Reused as:</i> ${s.use}`;
     const cx=Math.min(78,Math.max(22,(s.x+s.w/2)/1.6));tip.style.left=cx+'%';
@@ -141,4 +155,5 @@ STATIONS.forEach(s=>{
   b.addEventListener('blur',()=>tip.classList.remove('show'));
   map.appendChild(b);
 });
+// Hide station details when the map background is clicked.
 map.addEventListener('click',()=>tip.classList.remove('show'));

@@ -1,23 +1,22 @@
+/* Hide anything marked hidden. */
 [hidden] { display:none !important; }
 
-[hidden] { display:none !important; }
-
-/* Styles are grouped by page area. Change the variables below to update the theme. */
+/* Colors, background, gadget sizes, and gadget positions. */
 :root {
-  /* Wood background image. Keep the file in the images folder beside these files. */
+  /* Desk background image. */
   --wood-bg: url("https://thumb.ac-illust.com/92/92c00f28aa29ce4d92fd65e59a48b24d_t.jpeg");
   --wood-size: cover;
-  /* Set each gadget's display size independently. */
+  /* Gadget sizes. */
   --charger-size:200px;
   --phone-size:160px;
   --laptop-size:190px;
   --chip-size:120px;
-  /* Matching sizes for screens 640px wide or less. */
+  /* Gadget sizes on small screens. */
   --charger-size-small:100px;
   --phone-size-small:100px;
   --laptop-size-small:100px;
   --chip-size-small:100px;
-  /* Position each gadget independently on the desk (percent from top-left). */
+  /* Gadget positions on the desk. */
   --charger-x:20%;
   --charger-y:52%;
   --phone-x:56%;
@@ -26,7 +25,7 @@
   --laptop-y:13%;
   --chip-x:66%;
   --chip-y:58%;
-  /* Move each gadget title independently: positive X moves right, positive Y moves down. */
+  /* Gadget name positions. */
   --charger-title-x:0px;
   --charger-title-y:-25px;
   --phone-title-x:0px;
@@ -44,6 +43,7 @@
   --px:4px;
 }
 
+/* Basic page styles. */
 * {
   box-sizing:border-box
 }
@@ -73,6 +73,7 @@ h1,h2,h3,.pf,.btn {
   box-shadow:0 calc(-1*var(--px)) 0 0 var(--bc),0 var(--px) 0 0 var(--bc),calc(-1*var(--px)) 0 0 0 var(--bc),var(--px) 0 0 0 var(--bc)
 }
 
+/* Page title and progress counter. */
 header {
   display:flex;
   justify-content:space-between;
@@ -113,6 +114,7 @@ header h1 {
   background:var(--green)
 }
 
+/* Page layout, screen changes, headings, and buttons. */
 main {
   max-width:1000px;
   margin:0 auto;
@@ -185,7 +187,7 @@ h2 {
   transform:translateY(2px)
 }
 
-/* Screen 1: desk */
+/* Screen 1: desk and gadgets. */
 .desk {
   position:relative;
   height:520px;
@@ -321,7 +323,7 @@ h2 {
 
 }
 
-/* Modal */
+/* Pop-up with gadget details. */
 .ov {
   position:fixed;
   inset:0;
@@ -422,7 +424,7 @@ h2 {
   margin-top:14px
 }
 
-/* Screen 2 */
+/* Screen 2: map and recycling station details. */
 .stat {
   display:inline-block;
   background:var(--navy);
@@ -526,6 +528,7 @@ h2 {
   font-size:17px
 }
 
+/* Layout changes for small screens. */
 @media(max-width:640px) {
   .desk {
   height:640px
@@ -546,6 +549,7 @@ header h1 {
 
 }
 
+/* Reduce movement for people who prefer less animation. */
 @media(prefers-reduced-motion:reduce) {
   * {
   animation:none!important;
